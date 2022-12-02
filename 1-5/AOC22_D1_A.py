@@ -1,5 +1,5 @@
 def max_food():
-    with open("AOC_D1_A_input.txt", 'r') as infile:
+    with open("AOC22_D1_inp.txt", 'r') as infile:
         max_sum, run_sum = 0, 0
         for line in infile:
             if len((nice_line := line.strip())) == 0:

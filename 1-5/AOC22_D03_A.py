@@ -1,14 +1,13 @@
-from collections import Counter
-def total_sum():
-    result = 0
-    with open("AOC22_D03_inp.txt", 'r') as infile:
+def rucksack_sum(file_name):
+    total = 0
+    with open(file_name, 'r') as infile:
         for line in infile:
-            line = line.strip().replace(' ', '')
-            comp_len = int(len(line)/2)
-            first, second = set(line[:comp_len]), set(line[comp_len:])
-            common = ''.join(first & second)
-            result += ord(common.lower()) - ord('a') + 1 + 26*(common.isupper())
-    return result
+            line = line.strip()
+            split = len(line)//2
+            first, second = set(line[:split]), set(line[split:])
+            common = (first & second).pop()
+            total += ord(common.lower()) - ord('a') + 26*(common.isupper()) + 1
+    return total
 
 
-print(total_sum())
+print(rucksack_sum("AOC22_D03_inp.txt"))

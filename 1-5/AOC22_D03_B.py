@@ -1,17 +1,13 @@
-def total_sum():
-    result = 0
-    with open("AOC22_D03_inp.txt", 'r') as infile:
+def rucksack_sum(file_name):
+    total = 0
+    with open(file_name, 'r') as infile:
         for i, line in enumerate(infile):
-            line = line.strip().replace(' ', '')
-            if i % 3 == 0:
-                common = set(line)
-            else:
-                common = common & set(line)
-
+            line = set(line.strip())
+            badge = line if i % 3 == 0 else badge.intersection(line)
             if i % 3 == 2:
-                common = ''.join(common)
-                result += ord(common.lower()) - ord('a') + 1 + 26*(common.isupper())
-    return result
+                badge = badge.pop()
+                total += ord(badge.lower()) - ord('a') + 26*badge.isupper() + 1
+    return total
 
 
-print(total_sum())
+print(rucksack_sum("AOC22_D03_inp.txt"))

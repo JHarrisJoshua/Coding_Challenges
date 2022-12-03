@@ -3,7 +3,7 @@ def total_score() -> int:
     outcome = [3, 0, 6]  # 0-Draw(Y), 1-Lost(X), 2-Win(Z)
     result = 0
 
-    with open("AOC22_D2_inp.txt", 'r') as infile:
+    with open("AOC22_D02_inp.txt", 'r') as infile:
         for line in infile:
             line = line.strip()
             # Normalize game to 0-Draw, 1-Lost, 2-Win

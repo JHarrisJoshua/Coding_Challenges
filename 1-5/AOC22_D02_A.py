@@ -3,7 +3,7 @@ def total_score():
     outcome = [3, 0, 6]  # 0-Draw, 1-Lost, 2-Win
     result = 0
 
-    with open("AOC22_D2_inp.txt", 'r') as infile:
+    with open("AOC22_D02_inp.txt", 'r') as infile:
         for line in infile:
             line = line.strip()
             elf1, elf2 = choice[line[0]], choice[line[2]]

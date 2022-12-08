@@ -44,7 +44,7 @@ class ElvenDevice(object):
         while stack:
             size, name = stack.pop()
             (size,file_type) = (0,'dir') if size=='dir' else (int(size), 'file')
-            node = TreeNode(name,file_type,self.curr, size)
+            node = TreeNode(name, file_type, self.curr, size)
             self.curr.children[name] = node
 
     def change_dir(self, go_to):
@@ -66,7 +66,7 @@ class ElvenDevice(object):
         node.size = size
         return size
 
-    def get_small_dirs(self, root):
+    def get_small_dirs_bfs(self, root: TreeNode) -> int:
         queue = deque([root])
         total_size = 0
         while queue:
@@ -77,7 +77,18 @@ class ElvenDevice(object):
                 queue.append(curr.children[child])
         return total_size
 
-    def dir_to_delete(self, root: TreeNode, space_needed):
+    def get_small_dirs_dfs(self, root):
+        stack = [root]
+        total_size = 0
+        while stack:
+            curr: TreeNode = stack.pop()
+            if curr.file_type == 'dir' and curr.size < 100000:
+                total_size += curr.size
+            for child in curr.children:
+                stack.append(curr.children[child])
+        return total_size
+
+    def dir_to_delete_bfs(self, root: TreeNode, space_needed):
         space_to_free = space_needed - (self.space_avail - root.size)
         dir_to_remove, min_file_size = None, inf
 
@@ -92,14 +103,31 @@ class ElvenDevice(object):
                 queue.append(curr.children[child])
         return dir_to_remove, min_file_size
 
+    def dir_to_delete_dfs(self, root: TreeNode, space_needed):
+        space_to_free = space_needed - (self.space_avail - root.size)
+        dir_to_remove, min_file_size = None, inf
+
+        stack = [root]
+        while stack:
+            curr: TreeNode = stack.pop()
+            if space_to_free <= curr.size < min_file_size:
+                dir_to_remove, min_file_size = curr.name, curr.size
+            for child in curr.children:
+                if curr.children[child].file_type != 'dir':
+                    continue
+                stack.append(curr.children[child])
+        return dir_to_remove, min_file_size
+
 
 def main(file_name):
     device = ElvenDevice()
     device.make_file_tree(file_name)
     device.index_size(device.root)
     print(f'File System Root: {device}')
-    print(f'Problem 1 Answer: {device.get_small_dirs(device.root)}')
-    print(f'Problem 2 Answer: {device.dir_to_delete(device.root, 30000000)}')
+    print(f'Problem 1 Answer BFS: {device.get_small_dirs_bfs(device.root)}')
+    print(f'Problem 2 Answer BFS: {device.dir_to_delete_bfs(device.root, 30000000)}')
+    print(f'Problem 1 Answer DFS: {device.get_small_dirs_dfs(device.root)}')
+    print(f'Problem 2 Answer DFS: {device.dir_to_delete_dfs(device.root, 30000000)}')
 
 
 if __name__ == '__main__':

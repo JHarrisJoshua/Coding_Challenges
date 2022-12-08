@@ -4,11 +4,19 @@ from math import inf
 
 class TreeNode(object):
     def __init__(self, name, file_type, parent=None, size=0):
+        self.name = name
+        self.file_type = file_type
+        self.size = size
         self.parent = parent
         self.children = {}
-        self.name = name
-        self.size = size
-        self.file_type = file_type
+
+    def __repr__(self):
+        keys = ['Name', 'File Type', 'Size', 'Parent', 'Children']
+        values = [self.name, self.file_type, self.size,
+                  self.parent.name if self.parent else self.parent,
+                  {key for key in self.children}]
+        output = dict(zip(keys, values))
+        return output.__repr__()
 
 
 class ElvenDevice(object):
@@ -16,6 +24,9 @@ class ElvenDevice(object):
         self.root = TreeNode('/', 'dir')
         self.curr = self.root
         self.space_avail = 70000000
+
+    def __repr__(self):
+        return self.root.__repr__()
 
     def make_file_tree(self, file_name):
         with open(file_name, 'r') as infile:
@@ -83,11 +94,12 @@ class ElvenDevice(object):
 
 
 def main(file_name):
-    d = ElvenDevice()
-    d.make_file_tree(file_name)
-    d.index_size(d.root)
-    print(d.get_small_dirs(d.root))
-    print(d.dir_to_delete(d.root, 30000000))
+    device = ElvenDevice()
+    device.make_file_tree(file_name)
+    device.index_size(device.root)
+    print(f'File System Root: {device}')
+    print(f'Problem 1 Answer: {device.get_small_dirs(device.root)}')
+    print(f'Problem 2 Answer: {device.dir_to_delete(device.root, 30000000)}')
 
 
 if __name__ == '__main__':

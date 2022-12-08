@@ -131,14 +131,14 @@ def main(file_name):
     print(f'Problem 2 Answer DFS: {device.dir_to_delete_dfs(device.root, 30000000)}')
 
     # Time Trials
-    print(f'P1 Answer BFS trial: {_time_trial(device.get_small_dirs_bfs,device)}')
-    print(f'P2 Answer BFS trial: {_time_trial(device.dir_to_delete_bfs,device, 30000000)}')
-    print(f'P1 Answer DFS trial: {_time_trial(device.get_small_dirs_dfs,device)}')
-    print(f'P2 Answer DFS trial: {_time_trial(device.dir_to_delete_dfs,device,30000000)}')
+    print(f'P1 Answer BFS trial: {time_trial(device.get_small_dirs_bfs,device)}')
+    print(f'P2 Answer BFS trial: {time_trial(device.dir_to_delete_bfs,device, 30000000)}')
+    print(f'P1 Answer DFS trial: {time_trial(device.get_small_dirs_dfs,device)}')
+    print(f'P2 Answer DFS trial: {time_trial(device.dir_to_delete_dfs,device,30000000)}')
 
 
 @time_this
-def _time_trial(func, obj: ElvenDevice, space=None):
+def time_trial(func, obj: ElvenDevice, space=None):
     if space:
         func(obj.root, space)
     else:

@@ -1,11 +1,11 @@
 def lets_play_lite_brite(file_name):
     cycle, reg_val, result = 0, 1, 0
-    grid = [['.' for _ in range(40)] for _ in range(6)]
+    grid = [["\U0001F7E2" for _ in range(40)] for _ in range(6)]
 
     def push_some_pegs():
         row, col = divmod(cycle-1, 40)
         if col-1 <= reg_val <= col+1:
-            grid[row][col] = 'X'
+            grid[row][col] = "\U0001F534"
 
     with open(file_name, 'r') as infile:
         for line in infile:

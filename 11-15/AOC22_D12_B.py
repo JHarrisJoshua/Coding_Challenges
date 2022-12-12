@@ -14,7 +14,7 @@ def bfs(file_name):
 
     for i, row in enumerate(board):
         for j, val in enumerate(board[i]):
-            if val == 'S':
+            if val in ['S', 'a']:
                 board[i][j] = cost_map[i][j] = 0
                 queue.append((0, i, j))
             elif val == 'E':

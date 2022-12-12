@@ -3,8 +3,8 @@ import re
 
 
 class MonkeyInTheMiddle:
-    def __init__(self, file_name, rounds, monkeys_im_gonna_chase):
-        self.monkeys_to_chase = monkeys_im_gonna_chase
+    def __init__(self, file_name, rounds, monkeys_to_chase):
+        self.monkeys_to_chase = monkeys_to_chase
         self.items = deque([])
         self.operations = {}
         self.tests = {}
@@ -13,31 +13,21 @@ class MonkeyInTheMiddle:
         self.load_monkey_matrix_construct(file_name)
         self.stolen_item_tracker(rounds)
 
-
     def stolen_item_tracker(self, rounds):
-        roundn = 1
         while self.items:
-            round_n, monkey, worry_lvl, item_no = self.items.popleft()
-            if round_n > roundn:
-                print(round_n)
-                roundn += 1
-            # print('round_n', round_n, 'monkey', monkey, 'worry_lvl', worry_lvl, 'item_no', item_no)
+            round_n, monkey, worry_lvl = self.items.popleft()
             self.inspections[monkey] += 1
             worry_lvl = self.new_worry_level(monkey, worry_lvl)
-            new_monkey, worry_lvl = self.new_monkey(monkey, worry_lvl)
-            # print('round_n', round_n, 'new monkey', new_monkey, 'new_worry_lvl', worry_lvl, 'item_no', item_no)
-            if new_monkey > monkey:
-                self.items.append((round_n, new_monkey, worry_lvl, item_no))
+            new_monkey = self.new_monkey(monkey, worry_lvl)
 
+            if new_monkey > monkey:
+                self.items.append((round_n, new_monkey, worry_lvl))
             elif round_n < rounds:
-                self.items.append((round_n+1, new_monkey, worry_lvl, item_no))
+                self.items.append((round_n+1, new_monkey, worry_lvl))
 
     def new_monkey(self, monkey, worry):
         div, this_monkey, the_other_monkey = self.tests[monkey]
-        # test
-        new_monkey = this_monkey if worry % div == 0 else the_other_monkey
-        # worry = worry/div if new_monkey == this_monkey else worry
-        return new_monkey, worry
+        return this_monkey if worry % div == 0 else the_other_monkey
 
     def new_worry_level(self, monkey, old):
         op, factor = self.operations[monkey]
@@ -54,9 +44,9 @@ class MonkeyInTheMiddle:
 
     def load_monkey_matrix_construct(self, file_name):
         with open(file_name, 'r') as infile:
-            monkey, item_no = -1, 1
+            monkey = -1
             for i, line in enumerate(infile):
-                line: str|list = line.strip()
+                line = line.strip()
                 if line == '':
                     continue
                 elif line[0] == 'M':
@@ -65,8 +55,7 @@ class MonkeyInTheMiddle:
                 elif line[0] == 'S':
                     line = [int(x) for x in re.sub("[\sa-zA-Z:]+", '', line).split(',')]
                     for num in line:
-                        self.items.append((1, monkey, num, item_no))
-                        item_no += 1
+                        self.items.append((1, monkey, num))
                 elif line[0] == 'O':
                     line = line.split(' ')
                     line[-1] = int(line[-1]) if line[-1].isdigit() else line[-1]
@@ -87,6 +76,7 @@ if __name__ == '__main__':
     print("tests: ", monkey_business.tests)
 
     print(monkey_business.get_monkey_business_level())
+
 
 
 

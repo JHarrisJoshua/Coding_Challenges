@@ -3,8 +3,8 @@ import re
 
 
 class MonkeyInTheMiddle:
-    def __init__(self, file_name, rounds, monkeys_im_gonna_chase):
-        self.monkeys_to_chase = monkeys_im_gonna_chase
+    def __init__(self, file_name, rounds, monkeys_to_chase):
+        self.monkeys_to_chase = monkeys_to_chase
         self.items = deque([])
         self.operations = {}
         self.tests = {}
@@ -12,13 +12,13 @@ class MonkeyInTheMiddle:
         self.load_monkey_matrix_construct(file_name)
         self.stolen_item_tracker(rounds)
 
-
     def stolen_item_tracker(self, rounds):
         while self.items:
             round_n, monkey, worry_lvl = self.items.popleft()
             self.inspections[monkey] += 1
             worry_lvl = self.new_worry_level(monkey, worry_lvl)
             new_monkey = self.new_monkey(monkey, worry_lvl)
+
             if new_monkey > monkey:
                 self.items.append((round_n, new_monkey, worry_lvl))
             elif round_n < rounds:
@@ -66,7 +66,6 @@ class MonkeyInTheMiddle:
 
 if __name__ == '__main__':
     monkey_business = MonkeyInTheMiddle("AOC22_D11_inp.txt", 20, 2)
-    print("items: ", monkey_business.items)
     print("inspections: ", monkey_business.inspections)
     print("operations: ", monkey_business.operations)
     print("tests: ", monkey_business.tests)

@@ -130,3 +130,6 @@ dmypy.json
 
 # File Types
 *.txt
+
+# Timer
+time_this.py

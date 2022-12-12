@@ -3,11 +3,11 @@ from math import inf
 from time_this import time_this
 
 
+# Polymorphic Traversal: Choose the form of the [traversal]!
 def choose_your_own_adventure(file_name, adventure_type='bfs'):
-    operation = {'bfs': lambda deck: deck.popleft(), 'dfs': lambda deck: deck.pop()}
-
     deck_the_halls_with_stacks_or_queues = deque([])
-
+    operations = {'bfs': lambda deck: deck.popleft(),
+                  'dfs': lambda deck: deck.pop()}
     board, cost_map, target = [], [], None
     with open(file_name, 'r') as infile:
         for i, line in enumerate(infile):
@@ -25,7 +25,7 @@ def choose_your_own_adventure(file_name, adventure_type='bfs'):
 
     rows, cols = len(board), len(board[0])
     while deck_the_halls_with_stacks_or_queues:
-        cost, row, col = operation[adventure_type](deck_the_halls_with_stacks_or_queues)
+        cost, row, col = operations[adventure_type](deck_the_halls_with_stacks_or_queues)
         for r, c in [(row, col + 1), (row + 1, col),
                      (row, col - 1), (row - 1, col)]:
             if not 0<=r<rows or not 0<=c<cols:

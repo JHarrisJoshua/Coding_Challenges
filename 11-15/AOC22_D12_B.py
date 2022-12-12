@@ -22,6 +22,7 @@ def bfs(file_name):
                 board[i][j] = ord('z') - ord('a')
             else:
                 board[i][j] = ord(board[i][j]) - ord('a')
+                
     while queue:
         cost, row, col = queue.popleft()
         for r, c in [(row, col + 1), (row + 1, col), (row, col - 1), (row - 1, col)]:

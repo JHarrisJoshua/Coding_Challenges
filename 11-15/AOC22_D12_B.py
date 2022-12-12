@@ -1,5 +1,6 @@
 from collections import deque
 from math import inf
+from time_this import time_this
 
 
 def bfs(file_name):
@@ -68,5 +69,15 @@ def dfs(file_name):
     return cost_map[target[0]][target[1]]
 
 
-print("BFS: ", bfs("AOC22_D12_inp.txt"))
-print("DFS: ", dfs("AOC22_D12_inp.txt"))
+@time_this
+def time_trial(func):
+    func("AOC22_D12_inp.txt")
+
+
+if __name__=='__main__':
+    # Result & Time Trial
+    print("BFS: ", bfs("AOC22_D12_inp.txt"))
+    print(f'BFS trial: {time_trial(bfs)} seconds')
+
+    print("DFS: ", dfs("AOC22_D12_inp.txt"))
+    print(f'DFS trial: {time_trial(dfs)} seconds')

@@ -7,21 +7,22 @@ def main(file_name):
     with open(file_name, 'r') as infile:
         lines = [line.strip() for line in infile if line != '\n']
         lines = deque([literal_eval(line) for line in lines])
-        print(lines)
+        # print(lines)
         i = 1
         if i in [4,5,6,7]:
-            print("test")
+            # print("test")
+            pass
         while lines:
             line_1 = lines.popleft()
             line_2 = lines.popleft()
-            print("1: ", line_1, "2: ", line_2)
+            # print("1: ", line_1, "2: ", line_2)
             compare(line_1, line_2, result, i)
             i += 1
     return result, sum(result)
 
 
 def compare(line_1, line_2, result, i, j=0):
-    print("line_1", line_1, "line_2", line_2, "res", result, i, j)
+    # print("line_1", line_1, "line_2", line_2, "res", result, i, j)
     while j < len(line_1) or j < len(line_2):
         if j >= len(line_1):
             result.append(i)

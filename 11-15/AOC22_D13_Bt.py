@@ -13,8 +13,7 @@ class LineSorter(list):
 
         # print(is_lt)
         # print(f" line 1: {line1}, line2:  {line2}")
-        return \
-            is_lt
+        return is_lt
 
 
 def main(file_name):
@@ -39,15 +38,9 @@ def main(file_name):
                 check_tot += 1
             print(f"i: {i} -> ", check)
             i += 1
-    # print('-----unsorted down')
-    # print(sorted_lines)
-    # print('-----unsorted up')
+
     for i, row in enumerate(sorted_lines):
-        # print('-----uncoverted')
-        # print(sorted_lines[i])
         sorted_lines[i] = line_coverter(row)
-        # print('-----converted')
-        # print(sorted_lines[i])
 
     sorted_lines.sort(key=LineSorter)
     x, y = sorted_lines.index([2]), sorted_lines.index([6])
@@ -89,40 +82,8 @@ def compare_sort(line_1, line_2, j=0):
                 return True
             else:
                 j += 1
-        else:
-            print("test this")
-            # print(line_1[j])
-            # print(line_2[j])
     return True
 
-# def compare_sort(line_1, line_2, j=0):
-#     # print("line_1", line_1, "line_2", line_2, "res", result, i, j)
-#     while j < len(line_1) or j < len(line_2):
-#         if j >= len(line_1):
-#
-#             return True
-#         elif j >= len(line_2):
-#             return False
-#
-#         if type(line_1[j]) == int and type(line_2[j]) == int:
-#             if line_1[j] > line_2[j]:
-#                 return False
-#             if line_1[j] < line_2[j]:
-#
-#                 return True
-#             j += 1
-#         elif type(line_1[j]) == list or type(line_2[j]) == list:
-#             cmp_1 = line_1[j] if type(line_1[j]) == list else [line_1[j]]
-#             cmp_2 = line_2[j] if type(line_2[j]) == list else [line_2[j]]
-#             if not compare_sort(cmp_1, cmp_2):
-#                 return False
-#             else:
-#                 j += 1
-#         else:
-#             print("test this")
-#             print(line_1[j])
-#             print(line_2[j])
-#     return True
 
 
 def compare(line_1, line_2, result, i, j=0):
@@ -154,10 +115,8 @@ def compare(line_1, line_2, result, i, j=0):
             # print(line_2[j])
     return True
 
-print(type(inf))
-
 part_1_arr, part_1_sum, part_2_arr, part_2_res = main("AOC22_D13_inp.txt")
-print("Part 1: ", part_1_arr, part_1_sum)
+print("Part 1: ", part_1_sum)
 
 # print('-----')
 #

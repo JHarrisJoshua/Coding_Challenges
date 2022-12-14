@@ -13,15 +13,13 @@ def distress_signal(file_name):
         packet_queue = deque([literal_eval(line.strip())
                               for line in infile if line != '\n'])
     while packet_queue:
-        line_1 = packet_queue.popleft()
-        line_2 = packet_queue.popleft()
-        packets.append(line_1), packets.append(line_2)
-        if compare_packets(line_1, line_2):
+        [packets.append(packet_queue.popleft()) for _ in range(2)]
+        if compare_packets(packets[-2], packets[-1]):
             check_sum += i
         i += 1
     packets.sort(key=PacketSort)
-    div_packet_1, div_packet_2 = packets.index([[2]]), packets.index([[6]])
-    return check_sum, packets, (div_packet_1+1) * (div_packet_2+1)
+    signal_idx = packets.index([[2]]), packets.index([[6]])
+    return check_sum, packets, (signal_idx[0]+1) * (signal_idx[1]+1)
 
 
 def compare_packets(line_1, line_2, j=0) -> bool | None:

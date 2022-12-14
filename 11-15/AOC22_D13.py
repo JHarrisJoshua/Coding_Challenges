@@ -4,10 +4,7 @@ from collections import deque
 
 class PacketSort(list):
     def __lt__(packet_1, packet_2):
-        # if packet_1 in [[[6]],[[2]]] or packet_2 in [[[6]],[[2]]]:
-        #     print(packet_1, packet_2)
-        x = compare_packets(packet_1, packet_2)
-        return x
+        return compare_packets(packet_1, packet_2)
 
 
 def distress_signal(file_name):

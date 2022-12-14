@@ -15,7 +15,6 @@ class Cave:
                 slices[i] = [[int(num) for num in rock.split(sep=',')]
                              for rock in line.strip().split(sep=' -> ')]
 
-        # print(slices)
         min_x, max_x, min_y, max_y = inf, -inf, 0, -inf
         for i, row in enumerate(slices):
             for j, rock in enumerate(row):
@@ -23,7 +22,9 @@ class Cave:
                 min_x, max_x, min_y, max_y = (min(min_x, x), max(max_x, x),
                                               min(min_y, y), max(max_y, y))
 
-        min_x, max_x, min_y, max_y = min_x-1, max_x+1, min_y, max_y+1
+        min_y, max_y, height = min_y, max_y+2, max_y+2 - min_y
+        min_x = min(min_x-1,self.sandy_source[1] - height - 1)
+        max_x = max(max_x+1,self.sandy_source[1] + height + 1)
         boundaries = min_x, max_x, min_y, max_y
         rows, cols = max_y - min_y + 1, max_x - min_x + 1
         # print(min_x, max_x, min_y, max_y)
@@ -44,22 +45,21 @@ class Cave:
         return self.count
 
     def fill_cave(self):
-        try:
-            row, col = self.sandy_source[0], self.sandy_source[1]
-            while row < (limit := len(self.minimap) - 2):
-                while self.minimap[row+1][col] not in ['#','0'] and row<limit:
-                    row, col = row+1, col
-                if self.minimap[row+1][col-1] not in ['#','0']:
-                    row, col = row + 1, col - 1
-                elif self.minimap[row + 1][col + 1] not in ['#', '0']:
-                    row, col = row + 1, col + 1
-                elif self.minimap[row + 1][col] in ['#', '0']:
-                    self.minimap[row][col] = '0'
-                    self.count += 1
-                    return True
+        row, col = self.sandy_source[0], self.sandy_source[1]
+        if self.minimap[row][col] == "0":
             return False
-        except:
-            print(row, col)
+        while row < (len(self.minimap)):
+            while self.minimap[row+1][col] not in ['#','0']:
+                row, col = row+1, col
+            if self.minimap[row+1][col-1] not in ['#','0']:
+                row, col = row + 1, col - 1
+            elif self.minimap[row + 1][col + 1] not in ['#','0']:
+                row, col = row + 1, col + 1
+            elif self.minimap[row + 1][col] in ['#','0']:
+                self.minimap[row][col] = "0"
+                self.count += 1
+                return True
+        return False
 
     def map_cave(self, rock_1, rock_2, boundaries):
         min_x, max_x, min_y, max_y = boundaries
@@ -70,20 +70,16 @@ class Cave:
         # print(move, step)
         x_1, y_1 = rock_1[0]-min_x, rock_1[1]-min_y
         x_2, y_2 = rock_2[0]-min_x, rock_2[1]-min_y
-        self.minimap[y_1][x_1] = self.minimap[y_2][x_2] = '#'
+        self.minimap[y_1][x_1] = self.minimap[y_2][x_2] = "#"
         while (x_1, y_1) != (x_2, y_2):
             x_1, y_1 = x_1 + step[0], y_1 + step[1]
-            self.minimap[y_1][x_1] = '#'
-
+            self.minimap[y_1][x_1] = "#"
 
     def make_cave(self, rows, cols, start):
-        self.minimap = [['~' for _ in range(cols)] for _ in range(rows)]
+        self.minimap = [['X' for _ in range(cols)] for _ in range(rows)]
         self.minimap[start[0]][start[1]] = '+'
-
+        self.minimap[rows-1] = ["#" for _ in range(cols)]
 
 cave = Cave()
-print("Part 1:  ", cave.main("AOC22_D14_inp.txt"))
+print("Part 2:  ", cave.main("AOC22_D14_inp.txt"))
 cave_map = cave.minimap
-
-# for row in cave_map:
-#     print(row)

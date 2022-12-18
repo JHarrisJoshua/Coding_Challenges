@@ -2,14 +2,14 @@ from collections import deque
 
 
 def the_floor_is_lava(file_name):
-    lava, surface_area, size = set(), 0, 0
+    lava, surface_area, grid_size = set(), 0, 0
     with open(file_name, 'r') as lava_droplets:
         for droplet in lava_droplets:
             location = tuple(map(int, droplet.split(',')))
-            size = max(size, max(location))
+            grid_size = max(grid_size, max(location))
             lava.add(location)
 
-    water = flood_fill(lava, size+1)
+    water = flood_fill(lava, grid_size+1)
     for droplet in lava:
         x, y, z = droplet
         for x2,y2,z2 in [(x+1,y,z), (x-1,y,z), (x,y+1,z), (x,y-1,z),

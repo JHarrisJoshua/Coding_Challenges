@@ -7,5 +7,5 @@ Learn more at:
 https://adventofcode.com/about
 
 ## Leetcode
-### Coding challenges for data structures, algorithms and SQL
+### Coding challenges for data structures, algorithms, and databases(SQL)
 Profile: https://leetcode.com/JHarrisJoshua/

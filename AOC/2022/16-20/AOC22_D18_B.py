@@ -34,4 +34,3 @@ def flood_fill(lava, size):
 
 
 print(the_floor_is_lava("AOC22_D18_inp.txt"))
-# 1996 too low, someone else's answer

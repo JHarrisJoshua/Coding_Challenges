@@ -38,7 +38,7 @@ def elephant_tetris(file_name, simulation_size):
         #     print(rock_num, rock_num / simulation_size * 100)
         # if rock_num > 0 and rock_num % 100000 == 0:
         #     print(rock_num, rock_num / simulation_size * 100)
-        if rock_num in [5, 1715, 3425, 5135, 6220]:
+        if rock_num in [5, 1715, 2022,3425, 5135, 6220]:
             result[rock_num] = height
     return result
 

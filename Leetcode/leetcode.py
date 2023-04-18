@@ -17,6 +17,27 @@ class Solution1:
             values[val] = i
 
 
+# -------------------- 59. Spiral Matrix II ---------------------------------- #
+class Solution59:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        grid = [[0 for _ in range(n)] for _ in range(n)]
+        moves = [(0,1), (1,0), (0,-1), (-1,0)]
+        idx = 0
+
+        num, row, col = 1, 0, 0
+        grid[row][col] = num
+        num += 1
+
+        while num <= n * n:
+            r, c = row+moves[idx][0], col+moves[idx][1]
+            while not(0<=r<n and 0<=c<n) or grid[r][c] > 0:
+                idx = (idx+1) % 4
+                r, c = row+moves[idx][0], col+moves[idx][1]
+            grid[r][c] = num
+            row, col, num = r, c, num + 1
+        return grid
+
+
 # --------------------- 63. Unique Paths II ---------------------------------- #
 class Solution63:
     def uniquePathsWithObstacles(self, grid: List[List[int]]) -> int:
@@ -131,4 +152,17 @@ class Solution1480:
             run_sum += val
             result.append(run_sum)
         return result
+
+
+# ------------------ 1768. Merge Strings Alternately ------------------------- #
+class Solution1768:
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        m, n, res = len(word1), len(word2), []
+        l = r = 0
+        while l<m or r<n:
+            res.append(word1[l] if l<m else "")
+            res.append(word2[r] if r<n else "")
+            l, r = l+1, r+1
+        return "".join(res)
+
 

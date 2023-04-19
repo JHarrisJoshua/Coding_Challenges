@@ -134,6 +134,38 @@ class Solution1162:
         return result
 
 
+# ------------ 1372. Longest ZigZag Path in a Binary Tree -------------------- #
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution1372:
+    def longestZigZag(self, root: Optional[TreeNode],max_len=0) -> int:
+        # (node, depth, move)
+        # move: 0 is start, 1 is left, 2 is right
+        stack = [(root, 0, 0)]
+
+        while stack:
+            curr, depth, move = stack.pop()
+            max_len = max(max_len, depth)
+
+            if curr.left:
+                if move == 2:
+                    stack.append((curr.left, depth+1, 1))
+                else:
+                    stack.append((curr.left, 1, 1))
+            if curr.right:
+                if move == 1:
+                    stack.append((curr.right, depth+1, 2))
+                else:
+                    stack.append((curr.right, 1, 2))
+        return max_len
+
+
 # ------------ 1431. Kids With the Greatest Number of Candies ---------------- #
 class Solution1431:
     def kidsWithCandies(self, candies: List[int], extraCandies: int) -> List[bool]:

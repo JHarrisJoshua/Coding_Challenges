@@ -28,14 +28,33 @@ FROM CTE
 WHERE count_2015 > 1 AND count_loc = 1
 
 
------------- 1378. Replace Employee ID With The Unique Identifier --------------
-SELECT unique_id, name FROM Employees e
-LEFT JOIN EmployeeUNI u USING(id)
-
-
 ------------------ 596. Classes More Than 5 Students ---------------------------
 SELECT  class
 FROM Courses
 GROUP BY class
 HAVING COUNT(*) >= 5
+
+
+--------------------- 601. Human Traffic of Stadium ----------------------------
+WITH CTE1 AS (
+        SELECT  *
+                , id - RANK() OVER (ORDER BY id) as rnk
+        FROM Stadium
+        WHERE people >= 100
+), CTE2 AS (
+        SELECT  *
+                , COUNT(*) OVER (PARTITION BY rnk) cnt
+        FROM CTE1
+)
+SELECT id, visit_date, people FROM CTE2
+WHERE cnt >= 3
+ORDER BY visit_date
+
+
+------------ 1378. Replace Employee ID With The Unique Identifier --------------
+SELECT unique_id, name FROM Employees e
+LEFT JOIN EmployeeUNI u USING(id)
+
+
+
 

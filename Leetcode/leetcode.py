@@ -87,6 +87,35 @@ class Solution516:
         return dp[-1][-1]
 
 
+# ------------------- 662. Maximum Width of Binary Tree ---------------------- #
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class Solution662:
+    def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        queue = deque([(root, 0, 1)])
+        max_radius, level, left, right = 0, 0, inf, -inf
+
+        while queue:
+            curr, depth, value = queue.popleft()
+            if depth > level:
+                level, left, right = depth, inf, -inf
+
+            left, right = min(left, value), max(right, value)
+            max_radius = max(max_radius, right-left+1)
+
+            if curr.left:
+                queue.append((curr.left, depth+1, value*2-1))
+            if curr.right:
+                queue.append((curr.right, depth+1, value*2))
+        return max_radius
+
+
 # ------------------- 946. Validate Stack Sequences -------------------------- #
 class Solution946:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
@@ -135,14 +164,6 @@ class Solution1162:
 
 
 # ------------ 1372. Longest ZigZag Path in a Binary Tree -------------------- #
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-
 class Solution1372:
     def longestZigZag(self, root: Optional[TreeNode],max_len=0) -> int:
         # (node, depth, move)

@@ -56,5 +56,12 @@ SELECT unique_id, name FROM Employees e
 LEFT JOIN EmployeeUNI u USING(id)
 
 
-
+------------- 1978. Employees Whose Manager Left the Company -------------------
+SELECT  employee_id
+FROM Employees
+WHERE
+  manager_id NOT IN (SELECT employee_id FROM Employees)
+  AND
+  salary < 30000
+ORDER BY employee_id
 

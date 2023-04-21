@@ -6,6 +6,13 @@ from math import inf
 # https://leetcode.com/JHarrisJoshua/
 
 
+# ------------ Definition for a binary tree node ----------------------------  #
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 # -------------------- 1. Two Sum -------------------------------------------- #
 class Solution1:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -36,6 +43,18 @@ class Solution59:
             grid[r][c] = num
             row, col, num = r, c, num + 1
         return grid
+
+
+# ---------------------- 62. Unique Paths ------------------------------------ #
+class Solution62:
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0] * n] * m
+
+        for i, row in enumerate(dp):
+            for j, cell in enumerate(dp[0]):
+                dp[i][j] = (1 if i==0 or j==0
+                            else dp[i-1][j]+dp[i][j-1])
+        return dp[-1][-1]
 
 
 # --------------------- 63. Unique Paths II ---------------------------------- #
@@ -88,14 +107,6 @@ class Solution516:
 
 
 # ------------------- 662. Maximum Width of Binary Tree ---------------------- #
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-
 class Solution662:
     def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         queue = deque([(root, 0, 1)])

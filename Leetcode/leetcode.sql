@@ -56,6 +56,22 @@ SELECT unique_id, name FROM Employees e
 LEFT JOIN EmployeeUNI u USING(id)
 
 
+--------------------- 1479. Sales by Day of the Week ---------------------------
+SELECT
+    item_category as CATEGORY
+    , SUM(IF(DAYNAME(order_date)='Monday', quantity, 0)) as 'MONDAY'
+    , SUM(IF(DAYNAME(order_date)='Tuesday', quantity, 0)) as 'TUESDAY'
+    , SUM(IF(DAYNAME(order_date)='Wednesday', quantity, 0)) as 'WEDNESDAY'
+    , SUM(IF(DAYNAME(order_date)='Thursday', quantity, 0)) as 'THURSDAY'
+    , SUM(IF(DAYNAME(order_date)='Friday', quantity, 0)) as 'FRIDAY'
+    , SUM(IF(DAYNAME(order_date)='Saturday', quantity, 0)) as 'SATURDAY'
+    , SUM(IF(DAYNAME(order_date)='Sunday', quantity, 0)) as 'SUNDAY'
+FROM Items
+LEFT JOIN Orders USING(item_id)
+GROUP BY CATEGORY
+ORDER BY CATEGORY
+
+
 ------------- 1978. Employees Whose Manager Left the Company -------------------
 SELECT  employee_id
 FROM Employees

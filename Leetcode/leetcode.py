@@ -89,6 +89,26 @@ class Solution344:
             r -= 1
 
 
+# ------------------- 366. Find Leaves of Binary Tree ------------------------ #
+class Solution366:
+    def findLeaves(self, root: Optional[TreeNode]) -> List[List[int]]:
+        tree_nodes = []
+
+        def get_height(node):
+            if not node:
+                return -1
+
+            height = max(get_height(node.left), get_height(node.right)) + 1
+
+            if len(tree_nodes) == height:
+                tree_nodes.append([])
+            tree_nodes[height].append(node.val)
+            return height
+
+        get_height(root)
+        return tree_nodes
+
+
 # ------------------- 516. Longest Palindromic Subsequence ------------------- #
 class Solution516:
     def longestPalindromeSubseq(self, s: str) -> int:

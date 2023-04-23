@@ -250,3 +250,31 @@ class Solution1768:
         return "".join(res)
 
 
+# --------------- 1874. Minimize Product Sum of Two Arrays ------------------- #
+class Solution1874:
+    def minProductSum(self, nums1: List[int], nums2: List[int]) -> int:
+        def counting_sort(arr, desc=False):
+            arr_min, arr_max = inf, -inf
+            for i, val in enumerate(arr):
+                arr_min = min(arr_min, val)
+                arr_max = max(arr_max, val)
+            range_arr = [0] * (arr_max - arr_min + 1)
+
+            for i, val in enumerate(arr):
+                range_arr[val - arr_min] += 1
+
+            idx = (len(arr) - 1) if desc else 0
+            move = -1 if desc else 1
+            for i, val in enumerate(range_arr):
+                for j in range(val):
+                    arr[idx] = arr_min + i
+                    idx += move
+
+        counting_sort(nums1)
+        counting_sort(nums2, True)
+        result = 0
+        for i, val in enumerate(nums1):
+            result += val * nums2[i]
+
+        return result
+

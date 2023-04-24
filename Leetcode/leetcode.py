@@ -2,6 +2,8 @@
 from typing import *
 from collections import defaultdict, deque
 from math import inf
+import heapq
+
 
 # https://leetcode.com/JHarrisJoshua/
 
@@ -159,6 +161,20 @@ class Solution946:
                 j += 1
 
         return not check_array
+
+
+# ----------------------- 1046. Last Stone Weight ---------------------------- #
+class Solution1046:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        # Max heap
+        stones = [-wei for wei in stones]
+        heapq.heapify(stones)
+
+        while len(stones) > 1:
+            y, x = -heapq.heappop(stones), -heapq.heappop(stones)
+            if y > x:
+                heapq.heappush(stones, -y+x)
+        return abs(stones[0]) if stones else 0
 
 
 # ------------------- 1119. Remove Vowels from a String ---------------------- #

@@ -72,10 +72,15 @@ GROUP BY CATEGORY
 ORDER BY CATEGORY
 
 
---------------------- 1479. Sales by Day of the Week ---------------------------
+--------------------------- 1683. Invalid Tweets -------------------------------
 SELECT  tweet_id
 FROM Tweets
 WHERE length(content) > 15
+
+
+--------------------------- 1683. Invalid Tweets -------------------------------
+SELECT customer_id FROM Customers
+WHERE year = 2021 and revenue > 0
 
 
 ------------- 1978. Employees Whose Manager Left the Company -------------------

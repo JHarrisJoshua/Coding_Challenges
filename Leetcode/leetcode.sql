@@ -78,9 +78,18 @@ FROM Tweets
 WHERE length(content) > 15
 
 
---------------------------- 1683. Invalid Tweets -------------------------------
+---------- 1821. Find Customers With Positive Revenue this Year ----------------
 SELECT customer_id FROM Customers
 WHERE year = 2021 and revenue > 0
+
+
+------------------------ 1934. Confirmation Rate -------------------------------
+SELECT  user_id
+        , ROUND(SUM(IF(action="Confirmed", 1,0))
+          /  COUNT(*), 2) as confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c USING(user_id)
+GROUP BY user_id
 
 
 ------------- 1978. Employees Whose Manager Left the Company -------------------

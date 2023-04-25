@@ -2,6 +2,7 @@
 from typing import *
 from collections import defaultdict, deque
 from math import inf
+from heapq import heappop, heappush
 import heapq
 
 
@@ -293,4 +294,33 @@ class Solution1874:
             result += val * nums2[i]
 
         return result
+
+
+# ----------------- 2336. Smallest Number in Infinite Set -------------------- #
+# Your SmallestInfiniteSet object will be instantiated and called as such:
+# obj = SmallestInfiniteSet()
+# param_1 = obj.popSmallest()
+# obj.addBack(num)
+
+class SmallestInfiniteSet:
+    def __init__(self):
+        self._heap = []
+        self._set = set()
+        self._largest = 1
+
+    def popSmallest(self) -> int:
+        if not self._heap:
+            res = self._largest
+            self._largest += 1
+            return res
+        if self._heap:
+            res = heappop(self._heap)
+            self._set.remove(res)
+            return res
+
+    def addBack(self, num: int) -> None:
+        if num >= self._largest or num in self._set:
+            return
+        heappush(self._heap, num)
+        self._set.add(num)
 

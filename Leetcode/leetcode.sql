@@ -51,6 +51,12 @@ WHERE cnt >= 3
 ORDER BY visit_date
 
 
+------------------ 1350. Students With Invalid Departments ---------------------
+SELECT s.id, s.name FROM Students s
+LEFT JOIN Departments d on s.department_id=d.id
+WHERE ISNULL(d.id)
+
+
 ------------ 1378. Replace Employee ID With The Unique Identifier --------------
 SELECT unique_id, name FROM Employees e
 LEFT JOIN EmployeeUNI u USING(id)

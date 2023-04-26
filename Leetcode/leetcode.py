@@ -255,6 +255,11 @@ class Solution1480:
         return result
 
 
+# ----- 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers -------- #
+    def minPartitions(self, n: str) -> int:
+        return int(max(n))
+
+
 # ------------------ 1768. Merge Strings Alternately ------------------------- #
 class Solution1768:
     def mergeAlternately(self, word1: str, word2: str) -> str:

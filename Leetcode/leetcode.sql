@@ -107,3 +107,7 @@ WHERE
   salary < 30000
 ORDER BY employee_id
 
+------------- 2026. Low-Quality Problems --------------------------------------
+SELECT problem_id FROM Problems
+WHERE (likes/(likes+dislikes)) < .6
+ORDER BY problem_id

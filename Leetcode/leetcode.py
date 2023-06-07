@@ -78,6 +78,51 @@ class Solution63:
                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
         return dp[-1][-1]
 
+# ------------- 128. Longest Consecutive Sequence ---------------------------- #
+class Solution128:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        res, hashset = 0, set(nums)
+
+        while hashset:
+            curr, num = 1, hashset.pop()
+            plus, minus = num + 1, num - 1
+            while plus in hashset:
+                hashset.remove(plus)
+                curr += 1
+                plus += 1
+            while minus in hashset:
+                hashset.remove(minus)
+                curr += 1
+                minus -= 1
+            res = max(res, curr)
+        return res
+
+
+# ------------------- 169. Majority Element ---------------------------------- #
+class Solution169:
+    def majorityElement(self, nums: List[int]) -> int:
+        count, curr = 0, -inf
+
+        for i, num in enumerate(nums):
+            if num == curr:
+                count += 1
+            elif count == 0:
+                count, curr = 1, num
+            else:
+                count -= 1
+
+        return curr
+
+# ------------------- 217. Contains Duplicate -------------------------------- #
+class Solution217:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        seen = set()
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num)
+        return False
+
 
 # ------------------- 344. Reverse String ------------------------------------ #
 class Solution344:

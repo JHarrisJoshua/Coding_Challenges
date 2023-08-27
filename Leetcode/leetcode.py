@@ -195,6 +195,30 @@ class Solution662:
         return max_radius
 
 
+# ---------------------- 771. Jewels and Stones ---------------------------- #
+class Solution771:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        jewels = set(jewels)
+        res = 0
+
+        for char in stones:
+            if char in jewels:
+                res += 1
+        return res
+
+
+# ------------------- 933. Number of Recent Calls -------------------------- #
+class RecentCounter:
+    def __init__(self):
+        self.queue = deque([])
+
+    def ping(self, t: int) -> int:
+        while self.queue and self.queue[0] < (t-3000):
+            self.queue.popleft()
+        self.queue.append(t)
+        return len(self.queue)
+
+
 # ------------------- 946. Validate Stack Sequences -------------------------- #
 class Solution946:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
@@ -289,6 +313,32 @@ class Solution1431:
         return result
 
 
+# ---------------------- 1470. Shuffle the Array ---------------------------- #
+class Solution1470:
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
+        res = []
+        left, right = 0, n
+        for i in range(n):
+            res.append(nums[left]), res.append(nums[right])
+            left, right = left+1, right+1
+        return res
+
+
+# --------------------- 1476. Subrectangle Queries --------------------------- #
+class SubrectangleQueries:
+
+    def __init__(self, rectangle: List[List[int]]):
+        self.grid = rectangle
+
+    def updateSubrectangle(self, row1: int, col1: int, row2: int, col2: int, newValue: int) -> None:
+        for r in range(row1, row2 + 1):
+            for c in range(col1, col2 + 1):
+                self.grid[r][c] = newValue
+
+    def getValue(self, row: int, col: int) -> int:
+        return self.grid[row][col]
+
+
 # ------------------- 1480. Running Sum of 1d Array -------------------------- #
 class Solution1480:
     def runningSum(self, nums: List[int]) -> List[int]:
@@ -298,6 +348,32 @@ class Solution1480:
             run_sum += val
             result.append(run_sum)
         return result
+
+
+# ------------------- 1512. Number of Good Pairs ---------------------------- #
+class Solution1512:
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        hashmap, res = defaultdict(list), 0
+
+        for i, num in enumerate(nums):
+            if num in hashmap:
+                res += len(hashmap[num])
+            hashmap[num].append(i)
+        return res
+
+# ------------------- 1603. Design Parking System ---------------------------- #
+class ParkingSystem:
+    def __init__(self, big: int, medium: int, small: int):
+        self.big = big
+        self.medium = medium
+        self.small = small
+        self.types = {1: self.big, 2: self.medium, 3: self.small}
+
+    def addCar(self, carType: int) -> bool:
+        if self.types[carType] > 0:
+            self.types[carType] -= 1
+            return True
+        return False
 
 
 # ----- 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers -------- #
@@ -374,3 +450,8 @@ class SmallestInfiniteSet:
         heappush(self._heap, num)
         self._set.add(num)
 
+
+# ----------------- 2469. Convert the Temperature -------------------- #
+class Solution2469:
+    def convertTemperature(self, celsius: float) -> List[float]:
+        return [celsius + 273.15, celsius * 1.8 + 32]

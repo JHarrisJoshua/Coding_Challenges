@@ -78,6 +78,41 @@ class Solution63:
                     dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
         return dp[-1][-1]
 
+
+# -------------------- 75. Sort Colors --------------------------------------- #
+class Solution75:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        left, right, n = 0, len(nums) - 1, len(nums)
+
+        i = 0
+        while i < n and left < right and i <= right:
+            i = max(i, left)
+            num = nums[i]
+            if nums[left] == 0:
+                left += 1
+            elif nums[right] == 2:
+                right -= 1
+            elif num == 0:
+                nums[left], nums[i] = nums[i], nums[left]
+                left += 1
+            elif num == 2:
+                nums[right], nums[i] = nums[i], nums[right]
+                right -= 1
+            else:
+                i += 1
+
+
+# ------------- 119. Pascal's Triangle II ---------------------------- #
+class Solution119:
+    def getRow(self, rowIndex: int) -> List[int]:
+        result = []
+        for i in range(rowIndex+1):
+            result.append(math.comb(rowIndex, i))
+        return result
+
 # ------------- 128. Longest Consecutive Sequence ---------------------------- #
 class Solution128:
     def longestConsecutive(self, nums: List[int]) -> int:
@@ -252,6 +287,17 @@ class Solution1119:
     def removeVowels(self, s: str) -> str:
         return "".join([char for char in s if char not in 'aeiou'])
 
+
+# ----------------------- 1165. Single-Row Keyboard -------------------------- #
+class Solution1165:
+    def calculateTime(self, keyboard: str, word: str) -> int:
+        hashmap, res = dict(), 0
+        for i, char in enumerate(keyboard):
+            hashmap[char] = i
+
+        for i, char in enumerate(word):
+            res += abs(hashmap[char] - (0 if i == 0 else hashmap[word[i - 1]]))
+        return res
 
 # ------------------- 1162. As Far from Land as Possible --------------------- #
 class Solution1162:
@@ -455,3 +501,29 @@ class SmallestInfiniteSet:
 class Solution2469:
     def convertTemperature(self, celsius: float) -> List[float]:
         return [celsius + 273.15, celsius * 1.8 + 32]
+
+
+# ----------------- 2658. Maximum Number of Fish in a Grid -------------------- #
+class Solution2658:
+    def findMaxFish(self, grid: List[List[int]]) -> int:
+        feesh, rows, cols = 0, len(grid), len(grid[0])
+
+        def gotta_catch_em_all(spot):
+            stacked, catch = [spot], 0
+            while stacked:
+                r, c = stacked.pop()
+                catch += grid[r][c]
+                grid[r][c] = 0
+
+                for row, col in [(r+1,c),(r-1,c),(r,c+1),(r,c-1)]:
+                    if not (0<=row<rows and 0<=col<cols):
+                        continue
+                    if grid[row][col] > 0:
+                        stacked.append((row,col))
+            return catch
+
+        for i, row in enumerate(grid):
+            for j, val in enumerate(grid[i]):
+                if val > 0:
+                    feesh = max(feesh, gotta_catch_em_all((i,j)))
+        return feesh
